@@ -1,3 +1,6 @@
+namespace SpriteKind {
+    export const Switch = SpriteKind.create()
+}
 scene.onHitWall(SpriteKind.Player, function (sprite, location) {
     if (sprite.isHittingTile(CollisionDirection.Bottom)) {
         if (terminalVelocity()) {
@@ -30,6 +33,7 @@ function terminalVelocity () {
 }
 let thrust = 0
 let mySprite: Sprite = null
+scene.setBackgroundColor(12)
 tiles.setTilemap(tilemap`level1`)
 mySprite = sprites.create(img`
     . . . . . . . . . . . . . . . . 
@@ -49,14 +53,32 @@ mySprite = sprites.create(img`
     . . c b d d d d d 5 5 5 b b . . 
     . . . c c c c c c c c b b . . . 
     `, SpriteKind.Player)
-mySprite.setPosition(18, 16)
+mySprite.setPosition(16, 460)
+mySprite.setPosition(2320, 640)
 scene.cameraFollowSprite(mySprite)
-mySprite.setPosition(18, 16)
 mySprite.ay = 20
 mySprite.fx = 5
 mySprite.fy = 5
 thrust = -100
 let terminal_velocity = 25
+let switch1 = sprites.create(img`
+    . 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . 
+    . 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . 
+    . . . . . . . 2 2 . . . . . . . 
+    . . . . . . . 2 2 . . . . . . . 
+    . . . . . . . 2 2 . . . . . . . 
+    . . . . . . . 2 2 . . . . . . . 
+    . . . . . . . 2 2 . . . . . . . 
+    . f f f f f f f f f f f f f f . 
+    . f f f f f f f f f f f f f f . 
+    . f f f f f f f f f f f f f f . 
+    . f f f f f f f f f f f f f f . 
+    . f f f f f f f f f f f f f f . 
+    . f f f f f f f f f f f f f f . 
+    . f f f f f f f f f f f f f f . 
+    . f f f f f f f f f f f f f f . 
+    . f f f f f f f f f f f f f f . 
+    `, SpriteKind.Switch)
 game.onUpdateInterval(100, function () {
     if (terminalVelocity()) {
         if (mySprite.ax > 0) {
