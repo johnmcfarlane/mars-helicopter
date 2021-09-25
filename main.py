@@ -19,7 +19,6 @@ scene.on_hit_wall(SpriteKind.player, on_hit_wall)
 
 def on_a_pressed():
     global flying
-    console.log_value("on_a_pressed", flying)
     mySprite.ay += thrust
     flying = 1
 controller.A.on_event(ControllerButtonEvent.PRESSED, on_a_pressed)
@@ -27,12 +26,6 @@ controller.A.on_event(ControllerButtonEvent.PRESSED, on_a_pressed)
 def on_left_pressed():
     mySprite.ax += thrust
 controller.left.on_event(ControllerButtonEvent.PRESSED, on_left_pressed)
-
-def transform_tiles():
-    for index in range(100):
-        x = randint(0, 160)
-        y = randint(0, 160)
-        tile_type = get_tile_type(x, y)
 
 def on_right_released():
     mySprite.ax += thrust
@@ -50,19 +43,20 @@ def on_a_released():
     mySprite.ay += 0 - thrust
 controller.A.on_event(ControllerButtonEvent.RELEASED, on_a_released)
 
-def get_tile_type(x: number, y: number):
-    location = tiles.get_tile_location(x, y)
-    if tiles.tile_at_location_equals(location, sprites.dungeon.green_switch_down):
-        return 1
-    elif tiles.tile_at_location_equals(location, sprites.dungeon.purple_switch_down):
-        return -1
-
-    return 0
+# def get_tile_type(x: number, y: number):
+# global location
+# location = tiles.get_tile_location(x, y)
+# if tiles.tile_at_location_equals(location, sprites.dungeon.collectible_red_crystal):
+# return -1
+# elif tiles.tile_at_location_equals(location, sprites.dungeon.collectible_blue_crystal):
+# return 1
+# return 0
 def terminalVelocity():
     return mySprite.vy > 25
 flying = 0
 thrust = 0
 mySprite: Sprite = None
+success = 0
 scene.set_background_color(12)
 tiles.set_tilemap(tilemap("""
     level1
@@ -97,7 +91,7 @@ terminal_velocity = 25
 flying = 1
 
 def on_update_interval():
-    transform_tiles()
+    pass
 game.on_update_interval(1000, on_update_interval)
 
 def on_update_interval2():

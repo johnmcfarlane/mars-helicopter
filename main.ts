@@ -18,23 +18,12 @@ scene.onHitWall(SpriteKind.Player, function (sprite, location) {
     }
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    console.logValue("on_a_pressed", flying)
     mySprite.ay += thrust
     flying = 1
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite.ax += thrust
 })
-function transform_tiles () {
-    let x: number;
-let y: number;
-let tile_type: number;
-for (let index = 0; index < 100; index++) {
-        x = randint(0, 160)
-        y = randint(0, 160)
-        tile_type = get_tile_type(x, y)
-    }
-}
 controller.right.onEvent(ControllerButtonEvent.Released, function () {
     mySprite.ax += thrust
 })
@@ -47,22 +36,21 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
 controller.A.onEvent(ControllerButtonEvent.Released, function () {
     mySprite.ay += 0 - thrust
 })
-function get_tile_type (x: number, y: number) {
-    location = tiles.getTileLocation(x, y)
-    if (tiles.tileAtLocationEquals(location, sprites.dungeon.greenSwitchDown)) {
-        return 1
-    } else if (tiles.tileAtLocationEquals(location, sprites.dungeon.purpleSwitchDown)) {
-        return -1
-    }
-    return 0
-}
+// def get_tile_type(x: number, y: number):
+// global location
+// location = tiles.get_tile_location(x, y)
+// if tiles.tile_at_location_equals(location, sprites.dungeon.collectible_red_crystal):
+// return -1
+// elif tiles.tile_at_location_equals(location, sprites.dungeon.collectible_blue_crystal):
+// return 1
+// return 0
 function terminalVelocity () {
     return mySprite.vy > 25
 }
-let location: tiles.Location = null
 let flying = 0
 let thrust = 0
 let mySprite: Sprite = null
+let success = 0
 scene.setBackgroundColor(12)
 tiles.setTilemap(tilemap`level1`)
 mySprite = sprites.create(img`
@@ -83,8 +71,9 @@ mySprite = sprites.create(img`
     . . c b d d d d d 5 5 5 b b . . 
     . . . c c c c c c c c b b . . . 
     `, SpriteKind.Player)
-mySprite.setPosition(16, 460)
 mySprite.setPosition(1970, 1000)
+mySprite.setPosition(16, 460)
+mySprite.setPosition(16, 460)
 scene.cameraFollowSprite(mySprite)
 mySprite.ay = 20
 mySprite.fx = 5
@@ -92,9 +81,6 @@ mySprite.fy = 5
 thrust = -100
 let terminal_velocity = 25
 flying = 1
-game.onUpdateInterval(1000, function () {
-    transform_tiles()
-})
 game.onUpdateInterval(100, function () {
     if (terminalVelocity()) {
         if (mySprite.ax > 0) {
